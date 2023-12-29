@@ -49,24 +49,24 @@ public class CategoriesController
 
     @PostMapping// add annotation to call this method for a POST action
     //another annotation?
-    @PreAuthorize("hasRole('ADMIN')")// add annotation to ensure that only an ADMIN can call this function
+    @PreAuthorize("hasRole(''ROLE_ADMIN')")// add annotation to ensure that only an ADMIN can call this function
     public Category addCategory(@RequestBody Category category)
     {
         return categoryDao.create(category);   // insert the category
     }
 
     @PutMapping("/{id}")// add annotation to call this method for a PUT (update) action - the url path must include the categoryId
-    @PreAuthorize("hasRole('ADMIN')") // add annotation to ensure that only an ADMIN can call this function
+    @PreAuthorize("hasRole(''ROLE_ADMIN')") // add annotation to ensure that only an ADMIN can call this function
     public void updateCategory(@PathVariable int id, @RequestBody Category category)
     {
-        // update the category by id
+        categoryDao.update(id, category);// update the category by id
     }
 
 
     @DeleteMapping("/{id}")/// add annotation to call this method for a DELETE action - the url path must include the categoryId
-    @PreAuthorize("hasRole('ADMIN')") // add annotation to ensure that only an ADMIN can call this function
+    @PreAuthorize("hasRole(''ROLE_ADMIN')") // add annotation to ensure that only an ADMIN can call this function
     public void deleteCategory(@PathVariable int id)
     {
-        // delete the category by id
+        categoryDao.delete(id);// delete the category by id
     }
 }

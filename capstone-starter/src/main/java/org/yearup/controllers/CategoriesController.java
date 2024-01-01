@@ -20,7 +20,6 @@ public class CategoriesController
     private ProductDao productDao;
 
 
-
     @Autowired  // create an Autowired controller to inject the categoryDao and ProductDao
     public CategoriesController(CategoryDao categoryDao, ProductDao productDao){
         this.categoryDao = categoryDao;
@@ -61,7 +60,6 @@ public class CategoriesController
     {
         categoryDao.update(id, category);// update the category by id
     }
-
 
     @DeleteMapping("/{id}")/// add annotation to call this method for a DELETE action - the url path must include the categoryId
     @PreAuthorize("hasRole(''ROLE_ADMIN')") // add annotation to ensure that only an ADMIN can call this function

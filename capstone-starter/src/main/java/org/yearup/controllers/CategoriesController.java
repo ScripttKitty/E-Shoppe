@@ -1,8 +1,10 @@
 package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.CategoryDao;
 import org.yearup.data.ProductDao;
 import org.yearup.models.Category;
@@ -46,12 +48,13 @@ public class CategoriesController
 
 
     @PostMapping
-   // @RequestMapping(method = RequestMethod.POST)
+   //@RequestMapping(method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Category addCategory(@RequestBody Category category)
     {
         return categoryDao.create(category);
     }
+
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -62,8 +65,14 @@ public class CategoriesController
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteCategory(@PathVariable int id)
-    {
+    public void deleteCategory(@PathVariable int id) {
+        try
+        {
         categoryDao.delete(id);
+        }
+        catch(Exception ex)
+        {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
     }
-}
+    }

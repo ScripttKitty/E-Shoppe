@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
-{
+public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     public MySqlCategoryDao(DataSource dataSource) {
         super(dataSource);
     }
@@ -29,8 +28,9 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
             while (resultSet.next()) {
                 categories.add(mapRow(resultSet));
             }
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return categories;
 
@@ -39,18 +39,18 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
 
     @Override
     public Category getById(int categoryId) {
-try (Connection connection = getConnection();
-PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM categories WHERE category_id = ?");
-) {
-    preparedStatement.setInt(1, categoryId);
-    try (ResultSet resultSet = preparedStatement.executeQuery()) {
-        if(resultSet.next()){
-            return mapRow(resultSet);
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM categories WHERE category_id = ?");
+        ) {
+            preparedStatement.setInt(1, categoryId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapRow(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-    }
-} catch (SQLException e) {
-    throw new RuntimeException(e);
-}
         return null;
     }
 
@@ -73,11 +73,12 @@ PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM
         }
     }
 
-        @Override
+
+    @Override
     public void update(int categoryId, Category category) {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "UPDATE categories Set name = ?, description = ? WHERE category_id = ?")){
+                     "UPDATE categories Set name = ?, description = ? WHERE category_id = ?")) {
 
             preparedStatement.setString(1, category.getName());
             preparedStatement.setString(2, category.getDescription());
@@ -94,27 +95,25 @@ PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM
 
     @Override
     public void delete(int categoryId) {
-            try (Connection connection = getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(
-                         "DELETE FROM categories WHERE category_id = ?")) {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "DELETE FROM categories WHERE category_id = ?")) {
 
-                preparedStatement.setInt(1, categoryId);
-                preparedStatement.executeUpdate();
+            preparedStatement.setInt(1, categoryId);
+            preparedStatement.executeUpdate();
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
 
 
-    private Category mapRow(ResultSet row) throws SQLException
-    {
+    private Category mapRow(ResultSet row) throws SQLException {
         int categoryId = row.getInt("category_id");
         String name = row.getString("name");
         String description = row.getString("description");
 
-        Category category = new Category()
-        {{
+        Category category = new Category() {{
             setCategoryId(categoryId);
             setName(name);
             setDescription(description);

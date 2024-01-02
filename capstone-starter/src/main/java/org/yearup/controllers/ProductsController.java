@@ -25,6 +25,7 @@ public class ProductsController
         this.productDao = productDao;
     }
 
+
     //TODO: check this method again
     @GetMapping("")
     @PreAuthorize("permitAll()")
@@ -36,6 +37,7 @@ public class ProductsController
                return productDao.search(categoryId, minPrice, maxPrice, color);
 
     }
+
 
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
@@ -56,6 +58,7 @@ public class ProductsController
         }
     }
 
+
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Product addProduct(@RequestBody Product product)
@@ -70,6 +73,7 @@ public class ProductsController
         }
     }
 
+
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateProduct(@PathVariable int id, @RequestBody Product product)
@@ -83,6 +87,7 @@ public class ProductsController
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
+
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

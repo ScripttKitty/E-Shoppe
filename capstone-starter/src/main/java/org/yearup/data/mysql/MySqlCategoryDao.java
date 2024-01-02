@@ -63,25 +63,48 @@ PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM
             preparedStatement.setString(1, category.getName());
             preparedStatement.setString(2, category.getDescription());
 
+            int rows = preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+            return new Category(resultSet.getInt(1), category.getName(), category.getDescription());
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+        @Override
+    public void update(int categoryId, Category category) {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "UPDATE categories Set name = ?, description = ? WHERE category_id = ?")){
+
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setString(2, category.getDescription());
+            preparedStatement.setInt(3, categoryId);
+
+            preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return null;
     }
 
 
     @Override
-    public void update(int categoryId, Category category)
-    {
-        // update category
-    }
+    public void delete(int categoryId) {
+            try (Connection connection = getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(
+                         "DELETE FROM categories WHERE category_id = ?")) {
 
-    @Override
-    public void delete(int categoryId)
-    {
-        // delete category
-    }
+                preparedStatement.setInt(1, categoryId);
+                preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
 
     private Category mapRow(ResultSet row) throws SQLException

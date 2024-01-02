@@ -9,6 +9,7 @@ import org.yearup.models.Product;
 import org.yearup.data.ProductDao;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,12 +32,14 @@ public class ProductsController
                                 @RequestParam(name = "maxPrice", required = false) BigDecimal maxPrice,
                                 @RequestParam(name = "color", required = false) String color)
     {
-        try
-        {
-            return productDao.search(categoryId, minPrice, maxPrice, color);
-        }
-        catch(Exception ex)
-        {
+        try {
+            List<Product> filteredProducts = new ArrayList<>();
+
+            for(Product product : productDao.search(categoryId, minPrice, maxPrice, color)) {
+                filteredProducts.add(product);
+            }
+            return filteredProducts;
+        }  catch(Exception ex)  {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }

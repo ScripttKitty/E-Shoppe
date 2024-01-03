@@ -10,10 +10,11 @@ import org.yearup.data.ProductDao;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("categories")
 @CrossOrigin
 public class CategoriesController
 {
@@ -28,12 +29,15 @@ public class CategoriesController
     }
 
    @GetMapping
+   @PreAuthorize("permitAll()")
     public List<Category> getAll()
     {
         return categoryDao.getAllCategories();
     }
 
-   @GetMapping("/{id}")
+
+   @GetMapping("{id}")
+   @PreAuthorize("permitAll()")
     public Category getById(@PathVariable int id)
     {
         return categoryDao.getById(id);
@@ -41,6 +45,7 @@ public class CategoriesController
 
 
     @GetMapping("{categoryId}/products")
+    @PreAuthorize("permitAll()")
     public List<Product> getProductsById(@PathVariable int categoryId)
     {
         return productDao.listByCategoryId((categoryId));
@@ -48,31 +53,41 @@ public class CategoriesController
 
 
     @PostMapping
-   //@RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Category addCategory(@RequestBody Category category)
     {
-        return categoryDao.create(category);
-    }
-
-
-    @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateCategory(@PathVariable int id, @RequestBody Category category)
-    {
-        categoryDao.update(id, category);
-    }
-
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteCategory(@PathVariable int id) {
-        try
-        {
-        categoryDao.delete(id);
-        }
-        catch(Exception ex)
-        {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        try{
+            return categoryDao.create(category);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
+
+
+    @PutMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void updateCategory(@PathVariable int id, @RequestBody Category category) {
+        try {
+            categoryDao.update(id, category);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    //TODO: fix
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteCategory(@PathVariable int id, HttpServletResponse response) {
+
+      if(categoryDao.getById(id) == null){
+          response.setStatus(HttpStatus.NOT_FOUND.value());
+      }else {
+          categoryDao.delete(id);
+          response.setStatus(HttpStatus.NO_CONTENT.value());
+      }
+    }
+
+
     }

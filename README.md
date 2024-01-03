@@ -41,7 +41,8 @@
     
   _AFTER INSTALLATION_
   
-    You can open the website by running the project in intelliJ, open the _index_ file in the _Capstone-client-web-application_, and click on the top right logo of your broswer. The website is run under your       http://localhost:8080/ link.
+    You can open the website by running the project in intelliJ, open the index file in the Capstone-client-web-applicatio, and click on the top right logo of your broswer. 
+    The website is run under your http://localhost:8080/ link. From there you can freely choose which product filters to use and log in.
 
 
 
@@ -60,8 +61,8 @@
  
  - Paul’s github:
    
-        [Foreign Key Ex](https://github.com/pek-ia/java-syntax-examples/blob/main/jdbc-database-metadata/src/main/java/ForeignKeyExample.java)
-        [NorthwindTradersAPI](https://github.com/pek-ia/NorthwindTradersAPI)
+ [Foreign Key Ex](https://github.com/pek-ia/java-syntax-examples/blob/main/jdbc-database-metadata/src/main/java/ForeignKeyExample.java)
+ [NorthwindTradersAPI](https://github.com/pek-ia/NorthwindTradersAPI)
    
  - Spring.io : [Spring Boot](https://spring.io/projects/spring-boot/#learn)
   

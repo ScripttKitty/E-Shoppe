@@ -15,7 +15,7 @@
 
 ## Description
 
-   This application is an online shop for our partner company named EasyShop.
+   This application is an online shop for our partner company named EasyShop. The website features login details for both admin users and regular users. Additionally, you are able to choose which filters you would like to use for viewing our products, prices and images are displayed for your convenience.
    
 
 ## Features

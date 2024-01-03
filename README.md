@@ -75,6 +75,8 @@
        - Explaining a few lines of code 
        - Writing a test for my search method that I didn't use
 
+- Project Board:
+  ![project board](https://github.com/ScripttKitty/E-Shoppe/assets/89672262/f3769f87-f4b8-4fbf-81e9-4efc03e2a37e)
 
 
 ### Acknowledgments

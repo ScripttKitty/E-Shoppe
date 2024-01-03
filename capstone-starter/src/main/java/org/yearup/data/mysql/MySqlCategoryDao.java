@@ -121,5 +121,4 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
 
         return category;
     }
-
 }

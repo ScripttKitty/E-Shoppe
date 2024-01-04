@@ -10,7 +10,8 @@
 3. [User Guide](#UserGuide)
 4. [ER Diagram](#ERDiagram)
 5. [References](#References)
-6. [Acknowledgments](#Ackknowledgments)
+6. [Other Pictures](#OtherPictures)
+7. [Acknowledgments](#Ackknowledgments)
 
 
 ## Description
@@ -75,8 +76,19 @@
        - Explaining a few lines of code 
        - Writing a test for my search method that I didn't use
 
-- Project Board:
+
+## Other Pictures
+
+ Project Board:
   ![project board](https://github.com/ScripttKitty/E-Shoppe/assets/89672262/f3769f87-f4b8-4fbf-81e9-4efc03e2a37e)
+
+
+MySqlCategoryDao:
+  ![mySqlCategoryDao](https://github.com/ScripttKitty/E-Shoppe/assets/89672262/90862ddc-9962-4fec-8a6a-dbc8d32e8b8b)
+
+Postman Testing:
+  ![postman](https://github.com/ScripttKitty/E-Shoppe/assets/89672262/21b66bc5-f4ab-4216-9676-fab40ef1746b)
+
 
 
 ### Acknowledgments
